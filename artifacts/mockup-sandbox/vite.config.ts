@@ -35,7 +35,7 @@ import { defineConfig } from "vite";
     },
     root: path.resolve(import.meta.dirname),
     build: {
-      outDir: path.resolve(import.meta.dirname, "../../dist"),
+      outDir: path.resolve(import.meta.dirname, "dist"),
       emptyOutDir: true,
     },
     server: {
