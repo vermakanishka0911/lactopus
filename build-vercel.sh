@@ -1,23 +1,34 @@
 #!/bin/sh
   set -e
 
-  REPO_ROOT="$(pwd)"
-  echo "==> Running from: $REPO_ROOT"
+  # Always resolve paths relative to this script's location (repo root)
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  echo "==> Script dir (repo root): $SCRIPT_DIR"
+  echo "==> Original CWD: $(pwd)"
+
+  # Change to repo root so all relative paths are predictable
+  cd "$SCRIPT_DIR"
 
   # Build the Vite frontend
   pnpm --filter @workspace/mockup-sandbox run build
 
-  # The build outputs to artifacts/mockup-sandbox/dist
-  SRC="$REPO_ROOT/artifacts/mockup-sandbox/dist"
-  DEST="$REPO_ROOT/public"
+  # vite.config.ts outputs to: artifacts/mockup-sandbox/dist (absolute)
+  SRC="$SCRIPT_DIR/artifacts/mockup-sandbox/dist"
+  DEST="$SCRIPT_DIR/public"
 
-  echo "==> Source dist: $SRC"
-  ls -la "$SRC" || { echo "ERROR: dist not found at $SRC"; exit 1; }
+  echo "==> Checking build output at: $SRC"
+  if [ ! -d "$SRC" ]; then
+    echo "ERROR: Build output not found at $SRC"
+    echo "==> Searching for index.html in repo:"
+    find "$SCRIPT_DIR" -name "index.html" -not -path "*/node_modules/*" 2>/dev/null | head -10
+    exit 1
+  fi
 
-  # Copy to /public where Vercel will find it
+  echo "==> Build output found:"
+  ls -la "$SRC"
+
   rm -rf "$DEST"
   cp -r "$SRC" "$DEST"
-
-  echo "==> Copied to: $DEST"
-  ls -la "$DEST"
+  echo "==> Deployed to: $DEST"
+  ls "$DEST"
   
