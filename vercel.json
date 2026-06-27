@@ -1,7 +1,7 @@
 {
     "version": 2,
-    "buildCommand": "pnpm --filter @workspace/mockup-sandbox run build && cp -r artifacts/mockup-sandbox/dist ./dist",
-    "outputDirectory": "dist",
+    "buildCommand": "sh ./build-vercel.sh",
+    "outputDirectory": "public",
     "installCommand": "pnpm install --frozen-lockfile",
     "framework": null,
     "rewrites": [
