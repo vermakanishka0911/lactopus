@@ -192,13 +192,13 @@ function Nav() {
               <a key={l} href={h} className="text-sm font-medium transition-colors hover:text-[#FF9C00]" style={{ color: t.navLink, letterSpacing: '0.01em' }}>{l}</a>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeSwitch />
             <a href={URL_ENROLL} target="_blank" rel="noreferrer"
-              className="btn-shine hidden sm:inline-flex items-center gap-2 rounded-full font-bold text-sm"
+              className="btn-shine hidden lg:inline-flex items-center gap-2 rounded-full font-bold text-sm"
               style={{ background: '#FF9C00', color: '#05090f', padding: '0.55rem 1.4rem', boxShadow: '0 0 24px rgba(255,156,0,0.3)' }}
             >Enroll Now →</a>
-            <button onClick={() => setOpen(v => !v)} className="lg:hidden flex flex-col gap-1 p-2" aria-label="menu">
+            <button onClick={() => setOpen(v => !v)} className="lg:hidden flex flex-col gap-1.5 p-2.5" aria-label="menu" style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span className="block w-5 h-px" style={{ background: t.navLink }} />
               <span className="block h-px" style={{ width: open ? 20 : 14, background: t.navLink }} />
             </button>
@@ -628,10 +628,14 @@ function Testimonials() {
             </div>
           </motion.div>
         </AnimatePresence>
-        <div className="flex gap-2.5 mt-10 sm:mt-14">
+        <div className="flex items-center gap-0 mt-10 sm:mt-14">
           {qs.map((_, j) => (
             <button key={j} onClick={() => setI(j)} aria-label={`Quote ${j+1}`}
-              className="transition-all duration-300 rounded-full" style={{ height: 8, width: j === i ? 32 : 8, background: j === i ? '#FF9C00' : (isDark ? 'rgba(255,255,255,0.18)' : 'rgba(5,9,15,0.18)'), border: 'none' }} />
+              className="flex items-center justify-center transition-all duration-300"
+              style={{ minWidth: 44, minHeight: 44, background: 'none', border: 'none', padding: 0 }}>
+              <span className="block rounded-full transition-all duration-300"
+                style={{ height: 8, width: j === i ? 32 : 8, background: j === i ? '#FF9C00' : (isDark ? 'rgba(255,255,255,0.18)' : 'rgba(5,9,15,0.18)') }} />
+            </button>
           ))}
         </div>
       </div>
